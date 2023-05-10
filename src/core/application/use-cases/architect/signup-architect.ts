@@ -5,7 +5,11 @@ export class SignupArchitectUseCase {
   constructor(private architectRepository: ArchitectRepository) {}
 
   async execute(input: Input): Promise<void> {
-    const architect = Architect.create(input);
+    let architect = await this.architectRepository.getByEmail(input.email);
+
+    if (architect) throw new Error('Email is already registered.');
+
+    architect = Architect.create(input);
     await this.architectRepository.save(architect);
   }
 }
