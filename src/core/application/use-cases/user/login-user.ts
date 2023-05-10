@@ -11,6 +11,7 @@ export class LoginUserUseCase {
       throw new Error('Authentication failed');
 
     return {
+      id: user.id,
       name: user.name.value,
       token: 'jwt-token',
     };
@@ -23,6 +24,7 @@ type Input = {
 };
 
 type Output = {
+  id: string;
   name: string;
   token: string;
 };
