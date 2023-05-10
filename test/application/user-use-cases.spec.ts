@@ -40,4 +40,21 @@ describe('Architect use cases', () => {
     expect(user.name).toBe(inputSignup.name);
     expect(user.token).toBe('jwt-token');
   });
+  it('Should not be created user if the email is already in use.', async () => {
+    const { signup } = makeUserUseCases();
+
+    const inputSignup = {
+      name: 'John Doe',
+      email: 'John.Doe@gmail.com',
+      password: 'Password$123',
+      age: 30,
+      gender: 'Male',
+    };
+
+    await signup.execute(inputSignup);
+
+    await expect(() => signup.execute(inputSignup)).rejects.toThrow(
+      new Error('Email is already registered.'),
+    );
+  });
 });

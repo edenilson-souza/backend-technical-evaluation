@@ -50,4 +50,22 @@ describe('Architect use cases', () => {
 
     expect(architects.length).toBe(0);
   });
+
+  it('Should not be created architect  if the email is already in use.', async () => {
+    const { signup } = makeArchitectUseCases();
+
+    const inputSignup = {
+      name: 'John Doe',
+      email: 'John.Doe@gmail.com',
+      password: 'Password$123',
+      age: 30,
+      gender: 'Male',
+    };
+
+    await signup.execute(inputSignup);
+
+    await expect(() => signup.execute(inputSignup)).rejects.toThrow(
+      new Error('Email is already registered.'),
+    );
+  });
 });
