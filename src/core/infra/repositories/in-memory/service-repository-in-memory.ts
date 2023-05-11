@@ -11,21 +11,34 @@ export class ServiceRepositoryInMemory implements ServiceRepository {
   async save(service: Service): Promise<void> {
     this.services.push(service);
   }
+
   async update(service: Service): Promise<void> {
     const index = this.services.findIndex((item) => item.id === service.id);
     this.services[index] = service;
   }
+
+  async delete(id: string): Promise<void> {
+    const index = this.services.findIndex((service) => service.id === id);
+
+    if (index !== -1) {
+      this.services.splice(index, 1);
+    }
+  }
+
   async getServiceById(id: string): Promise<Service> {
     return this.services.find((service) => service.id === id);
   }
+
   async getServicesByClientId(clientId: string): Promise<Service[]> {
     return this.services.filter((service) => service.id_client === clientId);
   }
+
   async getServicesByArchiveId(archiveId: string): Promise<Service[]> {
     return this.services.filter(
       (service) => service.id_architect === archiveId,
     );
   }
+
   async listAllServices(): Promise<Service[]> {
     return this.services;
   }

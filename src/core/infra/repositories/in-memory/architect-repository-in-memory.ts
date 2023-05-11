@@ -17,6 +17,6 @@ export default class ArchitectRepositoryMemory implements ArchitectRepository {
   }
 
   async getByEmail(email: string): Promise<Architect | undefined> {
-    return this.architects.find((architect) => architect.email.value === email);
+    return this.architects.find((architect) => architect.email === email);
   }
 }
