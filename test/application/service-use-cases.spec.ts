@@ -113,7 +113,7 @@ describe('Service use cases', () => {
     };
 
     await sendServiceToArchitect.execute(inputRegisterArchitect);
-    const foundedService = await getServiceById.execute(service.id);
+    let foundedService = await getServiceById.execute(service.id);
 
     expect(foundedService.id_architect).toBe(
       inputRegisterArchitect.id_architect,
@@ -127,6 +127,7 @@ describe('Service use cases', () => {
     };
 
     await changeStatusService.execute(inputChangeStatus);
+    foundedService = await getServiceById.execute(service.id);
 
     expect(foundedService.status).toBe('accepted');
     expect(foundedService.id).toBe(inputRegisterArchitect.id);
@@ -137,6 +138,7 @@ describe('Service use cases', () => {
     };
 
     await changeStatusService.execute(inputChangeStatus);
+    foundedService = await getServiceById.execute(service.id);
 
     expect(foundedService.status).toBe('refused');
     expect(foundedService.id).toBe(inputRegisterArchitect.id);
@@ -144,7 +146,7 @@ describe('Service use cases', () => {
   it('Should list all services', async () => {
     const { listAllServices, createService } = makeServiceUseCases();
 
-    const services = await listAllServices.execute();
+    let services = await listAllServices.execute();
 
     expect(services.length).toBe(0);
 
@@ -154,6 +156,7 @@ describe('Service use cases', () => {
     };
 
     await createService.execute(inputCreateService);
+    services = await listAllServices.execute();
 
     expect(services.length).toBe(1);
   });
