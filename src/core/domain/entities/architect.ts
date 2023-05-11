@@ -5,16 +5,22 @@ import { randomUUID } from 'node:crypto';
 
 export class Architect {
   public readonly id: string;
+  public readonly name: string;
+  public readonly password: string;
+  public readonly email: string;
 
   private constructor(
-    readonly name: Name,
-    readonly email: Email,
-    readonly password: Password,
+    name: Name,
+    email: Email,
+    password: Password,
     readonly gender: string,
     readonly age: number,
     id?: string,
   ) {
     this.id = id || randomUUID();
+    this.name = name.value;
+    this.email = email.value;
+    this.password = password.value;
   }
 
   static create(input: Input): Architect {
