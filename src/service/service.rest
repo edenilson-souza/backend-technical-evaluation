@@ -1,0 +1,17 @@
+### 1. Create a new service
+POST http://localhost:3000/service HTTP/1.1
+content-type: application/json
+
+{
+    "id_client": "1",
+    "description": "Test"
+}
+
+
+### 2. Find All Services
+GET http://localhost:3000/service HTTP/1.1
+Content-Type: application/json
+
+
+### 3. Find Service by Id
+GET http://localhost:3000/service/requested/584e073c-f8b8-4fa4-937b-8d11350fdce5 HTTP/1.1

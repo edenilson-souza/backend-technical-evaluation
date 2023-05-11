@@ -1,0 +1,21 @@
+### 1. Create a new architect
+POST http://localhost:3000/architect/signup HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Joe Doe",
+    "email": "joe.doe@mail.com",
+    "password": "123456@Abc",
+    "gender": "M",
+    "age": 30
+}
+
+
+### 2. Login
+POST http://localhost:3000/architect/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "joe.doe@mail.com",
+    "password": "123456@Abc"
+}
