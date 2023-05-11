@@ -4,16 +4,15 @@ export class LoginArchitectUseCase {
   constructor(private architectRepository: ArchitectRepository) {}
 
   async execute(input: Input): Promise<Output> {
-    const architect = await this.architectRepository.getByEmail(
-      input.email,
-    );
+    const architect = await this.architectRepository.getByEmail(input.email);
 
     if (!architect) throw new Error('Authentication failed');
-    if (input.password !== architect.password.value)
+    if (input.password !== architect.password)
       throw new Error('Authentication failed');
 
     return {
-      name: architect.name.value,
+      id: architect.id,
+      name: architect.name,
       token: 'jwt-token',
     };
   }
@@ -25,6 +24,7 @@ type Input = {
 };
 
 type Output = {
+  id: string;
   name: string;
   token: string;
 };

@@ -4,7 +4,7 @@ import { ServiceRepository } from '../../repositories/service-repository';
 export class UpdateServiceUseCase {
   constructor(private serviceRepository: ServiceRepository) {}
 
-  async execute(input: Input): Promise<Service> {
+  async execute(input: Input): Promise<Output> {
     const service = await this.serviceRepository.getServiceById(input.id);
 
     if (!service) throw new Error('Service not found');
@@ -12,22 +12,36 @@ export class UpdateServiceUseCase {
       throw new Error('Unauthorized action');
 
     const updatedService = new Service(
-      input.id_client,
+      service.id_client,
       input.description,
       service.id,
       input.id_architect,
-      input.status,
+      service.status
     );
 
     await this.serviceRepository.update(updatedService);
-    return updatedService;
+
+    return {
+      id: updatedService.id,
+      id_client: updatedService.id_client,
+      id_architect: updatedService.id_architect,
+      description: updatedService.description,
+      status: updatedService.status,
+    };
   }
 }
 
-type Input = {
+type Output = {
   id: string;
   id_client: string;
   id_architect: string;
   description: string;
   status: ServiceStatus;
+};
+
+type Input = {
+  id: string;
+  id_client: string;
+  id_architect: string | null;
+  description: string;
 };

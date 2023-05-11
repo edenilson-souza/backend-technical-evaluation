@@ -7,12 +7,12 @@ export class LoginUserUseCase {
     const user = await this.userRepository.getByEmail(input.email);
 
     if (!user) throw new Error('Authentication failed');
-    if (input.password !== user.password.value)
+    if (input.password !== user.password)
       throw new Error('Authentication failed');
 
     return {
       id: user.id,
-      name: user.name.value,
+      name: user.name,
       token: 'jwt-token',
     };
   }
